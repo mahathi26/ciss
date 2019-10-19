@@ -9,7 +9,7 @@ body {
 	font: 12px Arial, Helvetica, sans-serif;
 	font-size: 13px;
 	color: #061C37;
-	background: #CCCCCC;
+	background: rgb(240, 235, 235);
 	background-image:url(images/background.png);
 	background-repeat:repeat-x;
 }
@@ -37,9 +37,9 @@ width:960px;
 {
 	position:absolute;
 text-align:left;
-color:#FFFFFF;
+color:rgb(22, 15, 15);
 font-size:43px;
-color:#FFF;	
+color:rgb(20, 12, 12);	
 left:14px;
 top:18px;
 }
@@ -49,7 +49,7 @@ top:18px;
 {
 position:absolute;
 text-align:right;
-color:#EAEAEA;
+color:rgb(24, 14, 14);
 left:490px;
 top:38px;
 width:400px;
@@ -67,7 +67,7 @@ height:354px;
 
 .off
 {
-color:#000000;
+color:#111010;
 }
 
 
@@ -105,7 +105,7 @@ background-image:url(images/leftmenu_bottom.png);
 {
 width:204px;
 height:auto;
-background-color:#5B5B5B;
+background-color:rgb(112, 95, 95);
 }
 
 #leftmenu_main ul
@@ -121,7 +121,7 @@ width:204px;
 list-style: none;
 padding: 0px;
 width:204px;
-color:#FFFFFF;
+color:rgb(29, 25, 25);
 padding-left:10px;
 padding-bottom:14px;
 }
@@ -147,7 +147,7 @@ text-align:left;
 background-image:url(images/leftmenu_link.png);
 background-repeat:repeat-x;
 margin-top:5px;
-color:#FFFFFF;
+color:rgb(12, 11, 11);
 text-decoration:none;
 font-size:15px;
 font-weight:bold;

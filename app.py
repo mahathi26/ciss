@@ -53,6 +53,59 @@ def home():
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
 
+@app.route('/login/register', methods=['GET', 'POST'])
+def register():
+    msg = ''
+    # Check if "username", "password" and "email" POST requests exist (user submitted form)
+    if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form:
+        # Create variables for easy access
+        fullname = request.form['fullname']
+        uname = request.form['username']
+        password = request.form['password']
+        email = request.form['email']
+                # Check if account exists using MySQL
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM users WHERE username = %s AND password = %s', (uname, password))
+        user = cursor.fetchone()
+        print(user)
+        #If account exists show error and validation checks
+        if user:
+            msg = 'Account already exists!'
+          
+        #elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
+
+
+            #msg = 'Invalid email address!'
+        elif not re.match(r'[A-Za-z0-9]+', uname):
+
+            msg = 'Username must contain only characters and numbers!'
+        elif not uname or not password or not email:
+
+            msg = 'Please fill out the form!'
+        else:
+
+            created_by = 'mahathi'
+            cursor.execute('INSERT INTO users (name,username,password,email,created_by) VALUES (%s,%s, %s, %s,%s)', (fullname,uname, password, email,created_by))
+            mysql.connection.commit()
+            msg = 'You have successfully registered!'
+
+
+            # Account doesnt exists and the form data is valid, now insert new account into accounts tabl
+    elif request.method == 'POST':
+        # Form is empty... (no POST data)
+        msg = 'Please fill out the form!'
+    # Show registration form with message (if any)
+    return render_template('register.html', msg=msg)
+
+@app.route('/login/home/logout')
+def logout():
+    # Remove session data, this will log the user out
+   session.pop('loggedin', None)
+   session.pop('id', None)
+   session.pop('username', None)
+   # Redirect to login page
+   return redirect(url_for('login'))
+
 if __name__=='__main__':
     app.run(debug = True) #debug = true makes sure that we dont have to reload the server everytime we make changes to the code. 
     #Just refresh the localhost:5000 see the changes made
