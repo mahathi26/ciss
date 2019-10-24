@@ -121,7 +121,9 @@ def logout():
    # Redirect to login page
    return redirect(url_for('login'))
 
-
+@app.route('/login/home/criminaldetails')
+def criDetails():
+    return render_template('crim_reg.html')
 
 
 if __name__=='__main__':

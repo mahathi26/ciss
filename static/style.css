@@ -56,7 +56,8 @@ body {
     background-color: #000000;
     color: #136419;
 }
-.login form input[type="password"], .login form input[type="text"], .login form input[type="email"], .register form input[type="password"], .register form input[type="text"], .register form input[type="email"] {
+.login form input[type="password"], .login form input[type="text"], .login form input[type="email"], .register form input[type="password"], .register form input[type="text"], .register form input[type="email"]
+.crim_reg form input[type="tel"],.crim_reg form input[type="cri_id"],crim_reg form input[type="radio"]  {
     width: 310px;
     height: 50px;
     border: 1px solid #dee0e4;
