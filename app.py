@@ -5,10 +5,9 @@ import re
 
 app = Flask(__name__)
 
-# Change this to your secret key (can be anything, it's for extra protection)
-app.secret_key = 'your secret key'
 
 
+app.config['SECRET_KEY'] = 'secret key'    
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = 'hello123'
@@ -30,14 +29,23 @@ def login():
         cursor.execute('SELECT * FROM users WHERE username = %s AND password = %s', (username, password))
         # Fetch one record and return result
         user = cursor.fetchone()
+        cursor.execute('SELECT name FROM users WHERE username = %s AND password = %s',(username,password))
+
         # If account exists in accounts table in out database
         if user:
             # Create session data, we can access this data in other routes
             session['loggedin'] = True
             #session['id'] = user['id']
             session['username'] = user['username']
+            session['name']=user['name']
+
             # Redirect to home page
-            return redirect(url_for('home'))
+
+            if user['type']=='admin':
+                return redirect(url_for('home'))
+            else:
+                return redirect(url_for('memberhome'))
+
         else:
             # Account doesnt exist or username/password incorrect
             msg = 'Incorrect username/password!'
@@ -49,7 +57,14 @@ def home():
     # Check if user is loggedin
     if 'loggedin' in session:
         # User is loggedin show them the home page
-        return render_template('home.html', username=session['username'])
+        return render_template('home.html',  name = session['name'])
+    # User is not loggedin redirect to login page
+    return redirect(url_for('login'))
+
+@app.route('/login/memberhome')
+def memberhome():
+    if 'loggedin' in session:
+        return render_template('member.html',  name = session['name'])
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
 
@@ -63,11 +78,11 @@ def register():
         uname = request.form['username']
         password = request.form['password']
         email = request.form['email']
+        typ = request.form['type']
                 # Check if account exists using MySQL
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM users WHERE username = %s AND password = %s', (uname, password))
         user = cursor.fetchone()
-        print(user)
         #If account exists show error and validation checks
         if user:
             msg = 'Account already exists!'
@@ -84,8 +99,8 @@ def register():
             msg = 'Please fill out the form!'
         else:
 
-            created_by = 'mahathi'
-            cursor.execute('INSERT INTO users (name,username,password,email,created_by) VALUES (%s,%s, %s, %s,%s)', (fullname,uname, password, email,created_by))
+            created_by = session['username']
+            cursor.execute('INSERT INTO users (name,username,password,email,created_by,type) VALUES (%s,%s, %s, %s,%s,%s)', (fullname,uname, password, email,created_by,typ))
             mysql.connection.commit()
             msg = 'You have successfully registered!'
 
@@ -105,6 +120,9 @@ def logout():
    session.pop('username', None)
    # Redirect to login page
    return redirect(url_for('login'))
+
+
+
 
 if __name__=='__main__':
     app.run(debug = True) #debug = true makes sure that we dont have to reload the server everytime we make changes to the code. 
