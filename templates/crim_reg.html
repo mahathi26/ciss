@@ -13,7 +13,7 @@
 				<!--<a href="{{ url_for('login') }}">Login</a>-->
 				<!--<a href="{{ url_for('register') }}" class="active">Register</a>-->
 			</div>
-			<form action="{{ url_for('register') }}" method="post" autocomplete="off">
+			<form action="{{ url_for('criminalDetails') }}" method="post" enctype ="multipart/form-data" autocomplete="off">
 				<label for="firstname">
 					<i class="fas fa-user"></i>
 				</label>
@@ -21,26 +21,27 @@
 				<label for="lastname">
 					<i class="fas fa-user"></i>
 				</label>
-				<input type="text" name="lastname" placeholder="Last Name" id="lastname" required>
+				<input type="text" name="lastname" placeholder="Last Name" id="lastname" required> 
 				<label for="phno">
-					<i class="fas fa-lock"></i>
+					<i class="fas fa-phone"></i>
 				</label>
-				<input type="tel" name="phno" placeholder="Phone Number" id="phno" required>
-				<label for="email">
-					<i class="fas fa-envelope"></i>
-				</label>
-                <input type="email" name="cri_email" placeholder="Email" id="cri_email" required>
+				<input type="text" name="phno" placeholder="Phone Number" id="phno" required>
                 <label for="cri_id">
-					<i class="fas fa-envelope"></i>
+					<i class="fas fa-id-card"></i>
 				</label>
-				<input type="cri_id" name="cri_id" placeholder="Criminal ID" id="cri_id" required>
+				<input type="text" name="cri_id" placeholder="Criminal ID" id="cri_id" required>
+				
+
 				<label for="gender">
 					<i class="fas fa-dot-circle"></i>
 				</label>
-				<input type="radio" name="gender" value="male" checked> Male<br>
-				<input type="radio" name="type" value="female" checked>Female<br>
+				<input type="radio" name="gender" value='m' > Male<br>
+				<input type="radio" name="gender" value='f' >Female<br>
+
+				<input type ="file" name = "profile_image">
 				<div class="msg">{{ msg }}</div>
-				<input type="submit" value="Register">
+				<input type="submit" value="Upload">
+				
 			</form>
 		</div>
 	</body>

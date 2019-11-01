@@ -10,7 +10,7 @@
 		<div class="register">
 			<h1>Register</h1>
 			<div class="links">
-				<!--<a href="{{ url_for('login') }}">Login</a>-->
+				<a href="{{ url_for('home') }}">Home</a>
 				<!--<a href="{{ url_for('register') }}" class="active">Register</a>-->
 			</div>
 			<form action="{{ url_for('register') }}" method="post" autocomplete="off">
@@ -31,8 +31,9 @@
 				</label>
 				<input type="email" name="email" placeholder="Email" id="email" required>
 				<label for="type">
-					<i class="fas fa-dot-circle"></i>
+					<i class="fas fa-venus-mars"></i>
 				</label>
+				<br>
 				<input type="radio" name="type" value="admin" checked> Admin<br>
 				<input type="radio" name="type" value="member" checked>Member<br>
 				<div class="msg">{{ msg }}</div>

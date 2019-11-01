@@ -28,14 +28,14 @@ body {
     padding: 0 15px;
 }
 .login .links a, .register .links a {
-    color: #2edd17;
+    color: #000000;
     text-decoration: none;
     display: inline-flex;
     padding: 0 10px 10px 10px;
     font-weight: bold;
 }
 .login .links a:hover, .register .links a:hover {
-    color: #cc8686;
+    color: #ebe8e8;
 }
 .login .links a.active, .register .links a.active {
     border-bottom: 3px solid #3274d6;
@@ -56,14 +56,33 @@ body {
     background-color: #000000;
     color: #136419;
 }
-.login form input[type="password"], .login form input[type="text"], .login form input[type="email"], .register form input[type="password"], .register form input[type="text"], .register form input[type="email"]
-.crim_reg form input[type="tel"],.crim_reg form input[type="cri_id"],crim_reg form input[type="radio"]  {
+.login form input[type="password"], .login form input[type="text"], .login form input[type="email"], .register form input[type="password"], .register form input[type="text"], .register form input[type="email"], .register form input[type="datetime-local"] {
     width: 310px;
     height: 50px;
     border: 1px solid #dee0e4;
     margin-bottom: 20px;
     padding: 0 15px;
 }
+
+
+.register form input[type= "textarea"]{
+    width: 310px;
+    height: 100px;
+    border: 1px solid #dee0e4;
+    margin-bottom: 30px;
+    padding: 0 15px;
+
+}
+.register form input[type="number"]{
+    width: 310px;
+    height: 50px;
+    border: 1px solid #dee0e4;
+    margin-bottom: 30px;
+    padding: 0 15px;
+
+}
+
+
 .login form input[type="submit"], .register form input[type="submit"] {
     width: 100%;
     padding: 15px;
@@ -76,9 +95,11 @@ body {
     transition: background-color 0.2s;
 }
 .login form input[type="submit"]:hover, .register form input[type="submit"]:hover {
-    background-color: #ffffff;
+    background-color: #396342;
     transition: background-color 0.2s;
 }
+
+
 .navtop {
     background-color: #0a3819;
     height: 60px;

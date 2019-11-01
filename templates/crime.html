@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>New Offender</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+	</head>
+	<body>
+		<div class="register">
+			<h1>Details Of Crime</h1>
+			<div class="links">
+				<!--<a href="{{ url_for('login') }}">Login</a>-->
+				<!--<a href="{{ url_for('register') }}" class="active">Register</a>-->
+			</div>
+			<form action="{{ url_for('crimeDetails') }}" method="post" autocomplete="off">
+				<label for="fir_id">
+					<i class="fas fa-id-card"></i>
+				</label>
+				<input type="text" name="fir_id" placeholder="FIR ID" id="fir_id" required>
+				<label for="place">
+					<i class="fas fa-location-arrow"></i>
+				</label>
+				<input type="text" name="place" placeholder="Location Of Crime" id="place" required> 
+				<label for="phno">
+					<i class="far fa-clock"></i>
+                </label>
+                
+				<input type="datetime-local" name="c_time" placeholder="Time of Crime" id="c_time" required>
+                <label for="desc">
+					<i class="far fa-newspaper"></i>
+				</label>
+                <input type="textarea" name="desc" placeholder="Description" id="desc" required>
+                <label for="c_type">
+					<i class="fas fa-angle-right"></i>
+                </label>
+                <select name="c_type">
+                    <option value="homicide">Homicide</option>
+                    <option value="petty theft">Petty theft</option>
+                    <option value="arson">Arson</option>
+                    <option value="burglary">Burglary</option>
+                    <option value="cyber crime">Cyber Crime</option>
+                    <option value="fraud">Fraud</option>
+                    <option value="domestic abuse">Domestic Abuse</option>
+                    <option value="terrorism">Terrorism</option>
+                    <option value="fraud">Fraud</option>
+                    <option value="terrorism">Terrorism</option>
+                    <option value="harrasment">Harrasment</option>
+                    <option value="rape">Rape</option>
+                    <option value="other">Other</option>
+
+
+                  </select>
+				
+				<div class="msg">{{ msg }}</div>
+				<input type="submit" value="Upload">
+				
+			</form>
+		</div>
+	</body>
+</html>

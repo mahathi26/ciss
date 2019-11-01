@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>New Offender</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+	</head>
+	<body>
+		<div class="register">
+			<h1>Details Of Punishment</h1>
+			<div class="links">
+				<!--<a href="{{ url_for('login') }}">Login</a>-->
+				<!--<a href="{{ url_for('register') }}" class="active">Register</a>-->
+			</div>
+			<form action="{{ url_for('punishmentDetails') }}" method="post" autocomplete="off">
+				<label for="prison_address">
+					<i class="fas fa-location-arrow"></i>
+				</label>
+				<input type="text" name="pr_address" placeholder="Prison Address" id="pr_address" > 
+				<label for="pr_time">
+					<i class="far fa-clock"></i>
+				</label>
+				<input type="number" name="pr_time" placeholder="Prison time" id="pr_time" >
+                
+                <input type="textarea" name="desc" placeholder="Description" id="p_desc" required>
+                
+                <select name="p_type">
+                    <option value="prison">Prison</option>
+                    <option value="fine">Fine</option>
+                    <option value="rehabilitation">Rehabilitation</option>
+                    <option value="other">Other</option>
+                </select>
+                
+                <b>If type of Crime is not prison, prison address and prison time will automatically be set to null</b>
+				
+				<div class="msg">{{ msg }}</div>
+				<input type="submit" value="Upload">
+				
+			</form>
+		</div>
+	</body>
+</html>

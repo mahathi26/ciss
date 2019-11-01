@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>New Offender</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+	</head>
+	<body>
+		<div class="register">
+			<h1>Details Of Dependent</h1>
+			
+			<form action="{{ url_for('dependentDetails') }}" method="post" autocomplete="off">
+				<label for="fname">
+					<i class="fas fa-user"></i>
+				</label>
+				<input type="text" name="fname" placeholder="First Name" id="fname" required>
+				<label for="lname">
+					<i class="fas fa-user"></i>
+				</label>
+				<input type="text" name="lname" placeholder="Last Name" id="lname" required> 
+				<label for="phno">
+					<i class="fas fa-phone"></i>
+				</label>
+				<input type="text" name="phno" placeholder="Phone Number" id="phno" required>
+                <label for="address">
+					<i class="fas fa-home"></i>
+				</label>
+                <input type="text" name="address" placeholder="Address" id="address" required>
+                <label for="relation">
+					<i class="fas fa-user-friends"></i>
+                </label>
+                <select name="relation">
+                    <option value="parent">Parent</option>
+                    <option value="sibling">Sibling</option>
+                    <option value="spouse">Spouse</option>
+                    <option value="child">Child</option>
+                    <option value="relative">Relative</option>
+                    <option value="acquaintance">Acquaintance</option>
+
+                  </select>
+                
+
+				
+
+				<label for="gender">
+					<i class="fas fa-venus-mars"></i>
+				</label>
+				<input type="radio" name="gender" value='m' > Male<br>
+				<input type="radio" name="gender" value='f' >Female<br>
+				<div class="msg">{{ msg }}</div>
+                <input type="submit" value="Upload">
+                <div class="links">
+                    <a href="{{ url_for('dependentDetails') }}">Click to register another dependent</a>
+                    <a href="{{ url_for('punishmentDetails') }}" class="active">Next</a>
+                </div>
+				
+			</form>
+		</div>
+	</body>
+</html>
