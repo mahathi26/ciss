@@ -89,17 +89,24 @@ clear:both;
 #leftmenu
 {
 margin-top:15px;
-width:70px;
+width:50px;
 float:left;
 }
 
 #leftmenu_top
 {
 width:204px;
-height:13px;
-background-image:url(images/leftmenu_top.png);
-}
+height:30px;
 
+}
+.menuitem form input[name="search"]{
+    width: 310px;
+    height: 50px;
+    border: 1px solid #dee0e4;
+    margin-bottom: 30px;
+    padding: 0 15px;
+
+}
 #leftmenu_main
 {
 width:25px;

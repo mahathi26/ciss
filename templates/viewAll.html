@@ -1,0 +1,56 @@
+<p3>DETAILS OF CRIMINALS</p3>
+        
+        <table border=1>
+                
+    
+                <tr> 
+                         
+                        <th>Criminal ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Phone number</th>
+                        <th>Sex</th>
+                        <th>Registration date</th>
+                        
+
+
+                        
+            
+                        </tr>
+                       
+                  
+                        {% for val in value %}
+                    <tr>
+                        <td>{{val['cri_id']}}</td>
+                        <td>{{val['cri_fname']}}</td>
+                        <td>{{val['cri_lname']}}</td>
+                        <td>{{val['cri_phno']}}</td>
+                        <td>{{val['cri_sex']}}</td>
+                        <td>{{val['cri_regdate']}}</td>
+                        
+                    
+                
+                    </tr>
+                    {% endfor %}
+                   
+                </table>
+                <style>
+                        body{
+                            background-color: #082512;
+                            color: #ffffff;
+            
+                        }
+                        p1{
+                            color:#ffffff;
+            
+                        }
+                        p2{
+                            color:#ffffff;
+                        }
+                        table{
+                            height:150px;
+                            width:500px;
+                        }
+                    </style>
+            
+            

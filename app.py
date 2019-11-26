@@ -3,6 +3,15 @@ from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import re
 
+import face_recognizer
+
+
+
+
+
+
+
+
 
 from flask_pymongo import PyMongo
 app = Flask(__name__)
@@ -41,6 +50,7 @@ def login():
             #session['id'] = user['id']
             session['username'] = user['username']
             session['name']=user['name']
+            session['type']=user['type']
 
             # Redirect to home page
 
@@ -65,6 +75,18 @@ def home():
         return render_template('home.html', name=session['name'])
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
+
+@app.route('/login/memberhome')
+
+def memberhome():
+    # Check if user is loggedin
+    if 'loggedin' in session:
+        # User is loggedin show them the home page
+        return render_template('member.html', name=session['name'])
+    # User is not loggedin redirect to login page
+    return redirect(url_for('login'))
+
+
 
 @app.route('/login/register', methods=['GET', 'POST'])
 def register():
@@ -131,7 +153,7 @@ def criminalDetails():
         phno = request.form['phno']
         cri_id = request.form['cri_id']
         cri_sex = request.form['gender']
-                # Check if account exists using MySQL
+
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM criminal WHERE cri_id = %s and cri_phno = %s', (cri_id,phno))
         criminal1 = cursor.fetchone()
@@ -276,7 +298,7 @@ def punishmentDetails():
         
         if not p_type or not desc :
 
-            msg = 'Please fill out the form! 2'
+            msg = 'Please fill out the form! '
         else:
 
             
@@ -288,11 +310,7 @@ def punishmentDetails():
 
 
 
-            # Account doesnt exists and the form data is valid, now insert new account into accounts tabl
-    #elif request.method == 'POST':
-        # Form is empty... (no POST data)
-     #   msg = 'Please fill out the form!'
-    # Show registration form with message (if any)
+       
 
     return render_template('punishment.html',msg=msg)
 
@@ -300,17 +318,17 @@ def punishmentDetails():
 @app.route('/login/home/update', methods=['GET','PUT'])
 def update():
     msg = ''
-    # Check if "username" and "password" POST requests exist (user submitted form)
+    
     if request.method == 'PUT':
-        # Create variables for easy access
+     
         c_id = request.form['c_id']
-        # Check if account exists using MySQL
+     
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM criminal WHERE c_id = %s ', (c_id))
-        # Fetch one record and return result
+     
         criminal1 = cursor.fetchone()
 
-        # If account exists in accounts table in out database
+  
         if criminal1:
             phno = request.form['phno']
             if not phno:
@@ -319,39 +337,143 @@ def update():
                 cursor.execute('UPDATE criminal SET cri_phno = %s WHERE cri_id = %s',(phno,c_id))
                 mysql.connection.commit()
                 msg="You have succesfully updated!"
-            # Redirect to home page
+           
 
 
         else:
-            # Account doesnt exist or username/password incorrect
+           
             msg = 'Incorrect criminal ID'
-    # Show the login form with message (if any)
+ 
     return render_template('updatecriminal.html', msg=msg)
-@app.route('/')
-def index():
-    return '''<form method = "POST" action="/create" enctype="multipart/form-data">
-                <input type="text" name="username">
-                <input type="file" name="profile_image">
-                <input type="submit">
-              </form> '''
-@app.route('/create', methods=['POST'])
-def create():
-    if 'profile_image' in request.files:
-        profile_image =request.files['profile_image']
-        mongo.save_file(profile_image.filename, profile_image)
-        mongo.db.users.insert({'username':request.form.get('username'),'profile_image_name':profile_image.filename})
-        return 'Done!'
+
 
 @app.route('/file/<filename>')
 def file(filename):
     return mongo.send_file(filename)
 
-@app.route('/profile/<cri_id>')
-def profile(cri_id):
-    user = mongo.db.criminal.find_one_or_404({'cri_id': cri_id})
-    return f'''
+@app.route('/profile')
+def profile():
+    
+    cri_id = session['criminal']
+    print(cri_id)
+    user = mongo.db.criminal.find_one_or_404({'cri_id': cri_id}) 
+    if session['type']=='admin':
+        return f''' 
         <h1>{cri_id}</h1>
-        <img src = "{url_for('file',filename=user['profile_image_name'])}">'''
+        <img src = "{url_for('file',filename=user['profile_image_name'])}">
+        <ul>
+        li><a href="http://localhost:5000/login/home">Go back home</a></li>
+        </ul>'''
+    else:
+        return f''' 
+        <h1>{cri_id}</h1>
+        <img src = "{url_for('file',filename=user['profile_image_name'])}">
+        <ul>
+        li><a href="http://localhost:5000/login/memberhome">Go back home</a></li>
+        </ul>'''
+
+    
+
+
+@app.route('/login/home/viewRecord',methods=['GET'])
+def viewRecord():
+    msg = ''
+    searchword = request.args.get('crim_id', '')
+    print(searchword)
+    session['criminal'] = searchword
+    if request.method=='GET' and searchword :
+        cri_id = searchword
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM criminal WHERE cri_id LIKE %s', [cri_id])
+      
+        criminal1 = cursor.fetchone()
+        cursor.execute('SELECT * FROM crime WHERE c_id LIKE %s', [cri_id])
+        crime = cursor.fetchone()
+        cursor.execute('SELECT * FROM punishment WHERE c_id LIKE %s',[cri_id])
+        punishment= cursor.fetchone()
+        cursor.execute('SELECT * FROM dependents WHERE c_id LIKE %s',[cri_id])
+        dependent = cursor.fetchall()
+        for row in dependent:
+            print(row)
+        if criminal1 and crime and punishment:
+            return render_template('view.html',value=criminal1,value2=crime,value3=punishment,value4 = dependent)
+
+
+        
+        
+        else:
+            msg = "This ID does not exist"
+            if session['type']=='admin':
+                return render_template('notexist.html')
+            else:
+                return render_template('notexistmember.html')
+    else:
+        print('no')
+        msg:'This record does not exist'
+        return render_template('viewRecords.html',msg=msg)
+
+        
+
+    
+
+    
+
+@app.route('/login/home/viewAll', methods=['GET'])
+def viewAll():
+
+    if request.method == 'GET':
+
+
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM criminal')
+        criminal1 = cursor.fetchall()
+        if criminal1:
+            return render_template('viewAll.html',value=criminal1)
+        else:
+            msg = 'No criminal data in database'
+            if session['type']=='admin':
+                return render_template('home.html',msg=msg)
+            else:
+                return render_template('member.html',msg=msg)
+            
+
+
+@app.route('/login/home/facerec')
+def facerec():
+    identity = face_recognizer.face()
+    print(identity)
+    cri_id = identity
+    if identity==None:
+        if session['type']=='admin':
+            return render_template('home.html',msg='No criminal record found')
+        else:
+            return render_template('member.html',msg='No criminal record found')
+            
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT * FROM criminal WHERE cri_id = %s', [cri_id])
+    criminal1 = cursor.fetchone()
+    
+    cursor.execute('SELECT * FROM crime WHERE c_id = %s', [cri_id])
+    crime = cursor.fetchone()
+    cursor.execute('SELECT * FROM punishment WHERE c_id =%s',[cri_id])
+    punishment= cursor.fetchone()
+    cursor.execute('SELECT * FROM dependents WHERE c_id LIKE %s',[cri_id])
+    dependent = cursor.fetchall()
+    if criminal1 and crime and punishment:
+        session['criminal'] = criminal1['cri_id']
+        return render_template('view.html',value=criminal1,value2=crime,value3=punishment,value4 = dependent)
+    
+    else:
+        if session['type']=='admin':
+            return render_template('notexist.html')
+        else:
+            return render_template('notexistmember.html')
+
+
+           
+
+
+
 if __name__=='__main__':
     app.run(debug = True) #debug = true makes sure that we dont have to reload the server everytime we make changes to the code. 
     #Just refresh the localhost:5000 see the changes made

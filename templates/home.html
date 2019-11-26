@@ -3,28 +3,41 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="{{ url_for('static', filename='stylehome.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <title>CIS</title>
 </head>
 
 <body>
 <div id="container">
 		<div id="header">
-        	<h1>CIS</h1>
+          <h1>CIS</h1>
+          <div class="msg">{{ msg }}</div>
             <h2>Welcome Admin, {{ name }}! </h2>
+            
         </div>   
         
         <div id="menu">
         	<ul>
             	
                 <li class="menuitem"><a href="http://localhost:5000/login/home/logout">Logout</a></li>
-               <!-- <li class="menuitem"><a href="#">Products</a></li>
-                <li class="menuitem"><a href="#">Services</a></li>
+               
+
+                <style>
+                  msg{
+                    font-size: 100px;
+                    align-content: center;
+                    
+                  }
+                </style>
+
+                
+               <!-- <li class="menuitem"><a href="#">Services</a></li>
                 <li class="menuitem"><a href="#">Design</a></li>
               <li class="menuitem"><a href="#">Contact</a></li>-->
             </ul>
         </div>
         
-        <div id="leftmenu">
+        <div id="leftmenu"></body>
 
         <div id="leftmenu_top"></div>
 
@@ -34,10 +47,14 @@
                         
                 <ul>
                     <li><a href="http://localhost:5000/login/register">Register Member</a></li>
-                    <li><a href="http://localhost:5000/login/home/criminaldetails">Upload Offender Details</a></li>
-                    <!---<li><a href="#">Ajax</a></li>
-                    <li><a href="#">jQuery</a></li>
-                    <li><a href="#">Web design</a></li>
+                    <li><a href="http://localhost:5000/login/home/criminaldetails">Upload offender</a></li>
+
+                    <li><a href="http://localhost:5000/login/home/viewAll">View All Criminals</a></li>
+                    <li><a href="http://localhost:5000/login/home/viewRecord">Search for record</a></li>
+                    <li><a href="http://localhost:5000/login/home/facerec">Open face recognition</a></li>
+
+                    
+                   <!-- <li><a href="#">Web design</a></li>
                     <li><a href="#">Web Programming</a></li>
                     <li><a href="#">Content Creation</a></li>
                     <li><a href="#">Internet Marketing</a></li>

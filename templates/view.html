@@ -1,0 +1,144 @@
+<doctype html>
+    <title>Criminals</title>
+    <p1>DETAILS OF CRIMINAL</p1>
+    <table border='1'>
+        
+        
+
+    <tr> 
+        <th>Criminal ID</th>  
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Sex</th>
+        <th>Phone Number</th>
+        </tr>
+  
+    
+    <tr>
+        <td>{{value['cri_id']}}</td>
+        <td>{{value['cri_fname']}}</td>
+        <td>{{value['cri_lname']}}</td>
+        <td>{{value['cri_sex']}}</td>
+        <td>{{value['cri_phno']}}</td>
+    
+
+    </tr>
+</table>
+
+
+<p2>DETAILS OF CRIME COMMITTED</p2>
+
+
+<table border=1>
+
+    <tr> 
+             
+            <th>FIR ID</th>
+            <th>Type</th>
+            <th>Place</th>
+            <th>Time Of Crime</th>
+            <th>Description</th>
+
+            </tr>
+      
+        
+        <tr>
+            <td>{{value2['fir_id']}}</td>
+            <td>{{value2['c_type']}}</td>
+            <td>{{value2['crime_place']}}</td>
+            <td>{{value2['crime_time']}}</td>
+            <td>{{value2['crime_desc']}}</td>
+        
+    
+        </tr>
+       
+    </table>
+
+    
+
+
+
+
+
+    <p2>DETAILS OF PUNISHMENT</p2>
+  
+    <table border=1>
+    
+        <tr> 
+                 
+                <th>Punishment Type</th>
+                <th>Prison time (if any)</th>
+                <th>Description</th>
+                
+    
+                </tr>
+          
+            
+            <tr>
+                <td>{{value3['p_type']}}</td>
+                <td>{{value3['prison_time']}}</td>
+                <td>{{value3['p_desc']}}</td>
+            
+        
+            </tr>
+           
+        </table>
+        <p3>DETAILS OF DEPENDENTS</p3>
+        
+        <table border=1>
+                
+    
+                <tr> 
+                         
+                        <th>First Name</th>
+                        <th>Last name</th>
+                        <th>Relation</th>
+                        <th>Phone number</th>
+                        <th>Sex</th>
+                        <th>Address</th>
+
+                        
+            
+                        </tr>
+                       
+                  
+                        {% for val in value4 %}
+                    <tr>
+                        <td>{{val['d_fname']}}</td>
+                        <td>{{val['d_lname']}}</td>
+                        <td>{{val['relation']}}</td>
+                        <td>{{val['d_phno']}}</td>
+                        <td>{{val['d_sex']}}</td>
+                        <td>{{val['d_address']}}</td>
+                        
+                    
+                
+                    </tr>
+                    {% endfor %}
+                   
+                </table>
+               
+        <ul>
+                <li><a href="http://localhost:5000/profile">View image of criminal</a></li>
+        </ul>
+        <style>
+            body{
+                background-color: #082512;
+                color: #ffffff;
+
+            }
+            p1{
+                color:#ffffff;
+
+            }
+            p2{
+                color:#ffffff;
+            }
+            table{
+                height:150px;
+                width:500px;
+            }
+        </style>
+
+
+
